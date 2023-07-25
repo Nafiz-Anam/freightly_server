@@ -29,6 +29,8 @@ var PaymentController = {
                     });
 
                     console.log(payment);
+                    console.log(payment.getCheckoutUrl());
+
                     res.status(200).json({
                         status: true,
                         message: "Payment Done!!!",
@@ -52,6 +54,7 @@ var PaymentController = {
     response: async (req, res) => {
         try {
             console.log(req.body);
+            console.log(req);
             res.status(200).json({
                 status: true,
                 message: "Got the response",
