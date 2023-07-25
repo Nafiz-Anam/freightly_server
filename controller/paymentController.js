@@ -31,8 +31,11 @@ var PaymentController = {
                     console.log(payment);
                     console.log(payment.getCheckoutUrl());
 
+                    let checkoutURL = payment.getCheckoutUrl()
+
                     res.status(200).json({
                         status: true,
+                        data: checkoutURL,
                         message: "Payment Done!!!",
                     });
                 } catch (error) {
@@ -53,13 +56,12 @@ var PaymentController = {
     },
     response: async (req, res) => {
         try {
-            console.log(req.body);
-            console.log(req);
+            const paymentId = req.body.id;
+            console.log(paymentId);
             res.status(200).json({
                 status: true,
                 message: "Got the response",
             });
-
         } catch (error) {
             console.log(error);
             res.status(500).json({
