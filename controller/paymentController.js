@@ -17,13 +17,14 @@ var PaymentController = {
                     const payment = await mollieClient.payments.create({
                         amount: {
                             currency: "EUR",
-                            value: "10.00", // You must send the correct number of decimals, thus we enforce the use of strings
+                            value: "199.00", // You must send the correct number of decimals, thus we enforce the use of strings
                         },
                         description: "My first payment",
-                        redirectUrl: "http://localhost:3000/",
-                        webhookUrl: "http://localhost:5000/payment/response/",
+                        redirectUrl: "https://app.freightly.nl/",
+                        webhookUrl:
+                            "https://freightly-server.onrender.com/api/v1/payment/response",
                         metadata: {
-                            order_id: "TEST1001",
+                            order_id: "TEST1003",
                         },
                     });
 
@@ -51,7 +52,11 @@ var PaymentController = {
     response: async (req, res) => {
         try {
             console.log(req.body);
-            console.log(req);
+            res.status(200).json({
+                status: true,
+                message: "Got the response",
+            });
+
         } catch (error) {
             console.log(error);
             res.status(500).json({
