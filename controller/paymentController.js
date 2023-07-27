@@ -5,9 +5,7 @@ const enc_dec = require("../utilities/decryptor/decryptor");
 const helpers = require("../utilities/helper/general_helper");
 const { createMollieClient } = require("@mollie/api-client");
 
-const stripe = require("stripe")(
-    "sk_test_51NY3V5FurZ1eGDKkQwEIziifg3FC1fBU2uIoewwPLmlrfqf5jNDDR9fK5frDuScqIWQaCMhhW7Ta8G5EiswxPwNP00emnVu24u"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const calculateOrderAmount = (total_price) => {
     let payAmount = total_price * 100;
@@ -37,7 +35,7 @@ var PaymentController = {
             });
         }
     },
-    
+
     webhook: async (req, res) => {
         try {
             const paymentId = req.body.id;

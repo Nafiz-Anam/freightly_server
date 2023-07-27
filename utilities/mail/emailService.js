@@ -4,17 +4,17 @@ const nodemailer = require("nodemailer");
 const signup = async (req, res) => {
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        host: "smtp.hostinger.com", // Replace with your Hostinger SMTP host
-        port: 465, // Replace with your Hostinger SMTP port
-        secure: true, // true for 465, false for other ports
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: true,
         auth: {
-            user: "yourtransport@freightly.nl", // Replace with your Hostinger email address
-            pass: "FreightlyNL2458$$$", // Replace with your Hostinger email password
+            user: process.env.SMTP_EMAIL,
+            pass: process.env.SMTP_PASS,
         },
     });
 
     let message = {
-        from: "yourtransport@freightly.nl", // sender address
+        from: process.env.SMTP_EMAIL, // sender address
         to: "nafiz.anam008@gmail.com", // list of receivers
         subject: "Hello ✔", // Subject line
         text: "Successfully Register with us.", // plain text body
