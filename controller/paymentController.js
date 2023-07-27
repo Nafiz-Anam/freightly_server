@@ -40,8 +40,12 @@ var PaymentController = {
     
     webhook: async (req, res) => {
         try {
-            console.log(req.body);
-            console.log(req);
+            const paymentId = req.body.id;
+            console.log(paymentId);
+            console.log(req.query);
+            console.log(req.params);
+            console.log(req.params.id);
+            console.log(req.headers);
             res.status(200).json({
                 status: true,
                 message: "Got the response",
