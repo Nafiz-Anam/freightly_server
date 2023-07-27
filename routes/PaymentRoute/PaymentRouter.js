@@ -7,8 +7,8 @@ const UserController = require("../../controller/userController");
 const checkAdminToken = require("../../utilities/tokenmanager/checkAdminToken");
 const PaymentController = require("../../controller/paymentController");
 
-router.post("/make_payment", PaymentController.make_payment);
-router.post("/response", PaymentController.response);
+router.post("/create", PaymentController.createPayment);
+router.post("/webhook", PaymentController.webhook);
 
 
 module.exports = router;

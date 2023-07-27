@@ -23,6 +23,7 @@
     "node-querybuilder": "^2.1.1",
     "sanitize": "^2.1.2",
     "sequential-uuid": "^1.0.0",
+    "stripe": "^12.14.0",
     "twilio": "^4.12.0"
   },
   "devDependencies": {

@@ -5,44 +5,30 @@ const enc_dec = require("../utilities/decryptor/decryptor");
 const helpers = require("../utilities/helper/general_helper");
 const { createMollieClient } = require("@mollie/api-client");
 
+const stripe = require("stripe")(
+    "sk_test_51NY3V5FurZ1eGDKkQwEIziifg3FC1fBU2uIoewwPLmlrfqf5jNDDR9fK5frDuScqIWQaCMhhW7Ta8G5EiswxPwNP00emnVu24u"
+);
+
+const calculateOrderAmount = (total_price) => {
+    let payAmount = total_price * 100;
+    return payAmount;
+};
+
 var PaymentController = {
-    make_payment: async (req, res) => {
+    createPayment: async (req, res) => {
         try {
-            const mollieClient = createMollieClient({
-                apiKey: "test_MpvUS5JMsWDnCpuE36K6NqGcPEhxC3",
+            const { total_price } = req.body.orderData;
+            // Create a PaymentIntent with the order amount and currency
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: calculateOrderAmount(total_price),
+                currency: "eur",
+                automatic_payment_methods: {
+                    enabled: true,
+                },
             });
-
-            (async () => {
-                try {
-                    const payment = await mollieClient.payments.create({
-                        amount: {
-                            currency: "EUR",
-                            value: "199.00", // You must send the correct number of decimals, thus we enforce the use of strings
-                        },
-                        description: "My first payment",
-                        redirectUrl: "https://app.freightly.nl/",
-                        webhookUrl:
-                            "https://freightly-server.onrender.com/api/v1/payment/response",
-                        metadata: {
-                            order_id: "TEST1003",
-                        },
-                    });
-
-                    console.log(payment);
-                    console.log(payment.getCheckoutUrl());
-
-                    res.status(200).json({
-                        status: true,
-                        message: "Payment Done!!!",
-                    });
-                } catch (error) {
-                    console.warn("error", error);
-                    res.status(500).json({
-                        status: false,
-                        message: error.title,
-                    });
-                }
-            })();
+            res.send({
+                clientSecret: paymentIntent.client_secret,
+            });
         } catch (error) {
             console.log(error);
             res.status(500).json({
@@ -51,7 +37,8 @@ var PaymentController = {
             });
         }
     },
-    response: async (req, res) => {
+    
+    webhook: async (req, res) => {
         try {
             console.log(req.body);
             console.log(req);
@@ -59,7 +46,6 @@ var PaymentController = {
                 status: true,
                 message: "Got the response",
             });
-
         } catch (error) {
             console.log(error);
             res.status(500).json({
