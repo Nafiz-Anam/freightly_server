@@ -18,8 +18,8 @@ const signup = async (req, res) => {
         from: process.env.SMTP_EMAIL, // sender address
         to: customerEmail, // list of receivers
         subject: "Hello from Freightly", // Subject line
-        text: "Successfully Register with us.", // plain text body
-        html: "<b>Successfully Register with us.</b>", // html body
+        text: "Freightly Payment.", // plain text body
+        html: "<b>Payment was successfull.</b>", // html body
     };
 
     transporter
