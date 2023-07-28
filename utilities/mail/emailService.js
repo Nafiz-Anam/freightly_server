@@ -4,10 +4,14 @@ const nodemailer = require("nodemailer");
 const signup = async (req, res) => {
     let customerEmail = req.body.emailData.email;
     // create reusable transporter object using the default SMTP transport
+    console.log("process.env.SMTP_HOST", process.env.SMTP_HOST);
+    console.log("process.env.SMTP_PORT", process.env.SMTP_PORT);
+    console.log("rocess.env.SMTP_EMAIL", process.env.SMTP_EMAIL);
+    console.log("process.env.SMTP_PASS", process.env.SMTP_PASS);
     let transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
-        secure: true,
+        secure: false,
         auth: {
             user: process.env.SMTP_EMAIL,
             pass: process.env.SMTP_PASS,
