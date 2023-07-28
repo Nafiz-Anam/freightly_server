@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 
 /** send mail from testing account */
 const signup = async (req, res) => {
+    let customerEmail = req.body.emailData.email;
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
@@ -15,8 +16,8 @@ const signup = async (req, res) => {
 
     let message = {
         from: process.env.SMTP_EMAIL, // sender address
-        to: "nafiz.anam008@gmail.com", // list of receivers
-        subject: "Hello ✔", // Subject line
+        to: customerEmail, // list of receivers
+        subject: "Hello from Freightly", // Subject line
         text: "Successfully Register with us.", // plain text body
         html: "<b>Successfully Register with us.</b>", // html body
     };
