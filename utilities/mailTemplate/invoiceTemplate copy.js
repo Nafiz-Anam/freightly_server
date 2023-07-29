@@ -44,7 +44,6 @@ module.exports = function () {
       padding-bottom: 20px;
       margin: 20px 0;
       border-bottom: solid 3px #000;
-      text-align: left;
     }
 
     .logo {
@@ -63,10 +62,10 @@ module.exports = function () {
       margin: 50px 0 30px 0;
     }
 
-    /* .invoice-table th, */
+    .invoice-table th,
     .invoice-table td {
       padding: 10px;
-      border-top: 1px solid #000000;
+      border-bottom: 1px solid #000000;
     }
 
     .invoice-table th {
@@ -77,10 +76,35 @@ module.exports = function () {
       font-size: 13px;
     }
 
-    .parent3 h2 {
+    .parent3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 1fr;
+      grid-column-gap: 0px;
+      grid-row-gap: 0px;
+    }
+
+    .invoice-details .parent3 h2 {
       margin: 0;
       font-size: 14px;
       text-decoration: underline;
+    }
+
+    .invoice-details .parent3 .div-p {
+      padding: 0 10px;
+      border-left: dashed 1px;
+    }
+
+    .invoice-details .parent3 .div-c {
+      padding: 0 10px;
+      border-left: dashed 1px;
+
+    }
+
+    .invoice-details .parent3 .div-d {
+      padding: 0 10px;
+      border-left: dashed 1px;
+
     }
 
     .parent3 p {
@@ -98,6 +122,27 @@ module.exports = function () {
       background-color: #f2f2f2;
     }
 
+    .striped-table tbody tr:nth-child(odd) {
+      background-color: #fff;
+    }
+
+    .striped-table tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .striped-table tbody tr:last-child td {
+      border: none;
+      background-color: #ffffff;
+    }
+
+    .striped-table td:last-child {
+      text-align: right;
+    }
+
+    .striped-table th:last-child {
+      text-align: right;
+    }
+
     .striped-table .last-row td {
       font-size: 18px;
       font-weight: bold;
@@ -110,38 +155,38 @@ module.exports = function () {
     }
 
     .parent {
-      display: table;
-      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 1fr;
+      grid-column-gap: 0px;
+      grid-row-gap: 0px;
       margin-top: 5px;
-      table-layout: fixed;
     }
 
     .parent2 {
-      display: table;
-      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 1fr;
+      grid-column-gap: 0px;
+      grid-row-gap: 0px;
       margin-top: 5px;
       height: 150px;
     }
 
     .div1 {
+      grid-area: 1 / 1 / 2 / 2;
       text-align: left;
     }
-    .div2{
-      padding-top: 50px;
-    }
-    .div2,.div4 {
-      text-align: right;
-    }
 
-    .div1,
-    .div2,
-    .div3,
-    .div4 {
-      display: table-cell;
-      vertical-align: top;
+    .div2 {
+      grid-area: 1 / 2 / 2 / 3;
+      text-align: right;
+      padding-top: 20%;
     }
 
     .div3 {
+      grid-area: 1 / 1 / 2 / 2;
+      text-align: left;
       position: relative;
     }
 
@@ -151,6 +196,11 @@ module.exports = function () {
       border: 2px solid;
       bottom: 8px;
       left: 0;
+    }
+
+    .div4 {
+      grid-area: 1 / 2 / 2 / 3;
+      text-align: right;
     }
 
     .div4 h2 {
@@ -168,21 +218,6 @@ module.exports = function () {
       margin: 2px 0px;
       font-size: 12px;
     }
-
-    .div-c,
-    .div-p,
-    .div-d {
-      border-left: 1px dashed;
-      padding: 0 10px
-    }
-
-    .striped-table .right-align {
-      text-align: right;
-    }
-
-    .striped-table .right-center {
-      text-align: center;
-    }
   </style>
 </head>
 
@@ -197,59 +232,58 @@ module.exports = function () {
 
       <!-- invoice details  -->
       <div class="invoice-details">
-        <table class="parent3">
-          <tr>
-            <td class="div-c">
-              <h2>Contact Details</h2>
-              <p>nafiz anam</p>
-              <p>nafiz@gmail.com</p>
-              <p>018596548555</p>
-              <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
-            </td>
-            <td class="div-p">
-              <h2>Pickup Details</h2>
-              <p>nafiz anam</p>
-              <p>nafiz@gmail.com</p>
-              <p>018596548555</p>
-              <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
-            </td>
-            <td class="div-d">
-              <h2>Delivery Details</h2>
-              <p>nafiz anam</p>
-              <p>nafiz@gmail.com</p>
-              <p>018596548555</p>
-              <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
-            </td>
-          </tr>
-        </table>
+        <div class="parent3">
+          <div class="div-c">
+            <h2>Contact Details</h2>
+            <p>nafiz anam</p>
+            <p>nafiz@gmail.com</p>
+            <p>018596548555</p>
+            <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
+          </div>
+          <div class="div-p">
+            <h2>Pickup Details</h2>
+            <p>nafiz anam</p>
+            <p>nafiz@gmail.com</p>
+            <p>018596548555</p>
+            <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
+          </div>
+          <div class="div-d">
+            <h2>Delivery Details</h2>
+            <p>nafiz anam</p>
+            <p>nafiz@gmail.com</p>
+            <p>018596548555</p>
+            <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
+          </div>
+
+        </div>
         <div class="items">
           <table class="striped-table invoice-table">
             <thead>
               <tr>
                 <th>Description</th>
-                <th class="right-center">Quantity</th>
-                <th class="right-align">Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>John Doe</td>
-                <td class="right-center">30</td>
-                <td class="right-align">€30.00</td>
+                <td>30</td>
+                <td>€30.00</td>
               </tr>
               <tr>
                 <td>Jane Smith</td>
-                <td class="right-center">25</td>
-                <td class="right-align">€25.26</td>
+                <td>25</td>
+                <td>€25.26</td>
               </tr>
               <tr>
                 <td>Michael Johnson</td>
-                <td class="right-center">40</td>
-                <td class="right-align">€56.20</td>
+                <td>40</td>
+                <td>€56.20</td>
               </tr>
               <tr class="last-row">
                 <td class="total" colspan="2">Total:</td>
-                <td class="total right-align">
+                <td class="total">
                   €1120.56
                 </td>
               </tr>
