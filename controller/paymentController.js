@@ -8,7 +8,7 @@ const { createMollieClient } = require("@mollie/api-client");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const calculateOrderAmount = (total_price) => {
-    let payAmount = total_price * 100;
+    let payAmount = parseInt(total_price * 100);
     return payAmount;
 };
 

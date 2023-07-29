@@ -13,7 +13,7 @@ const app = express();
 //middle-wares
 app.use(cors());
 app.use(require("sanitize").middleware);
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(express.json());
 // using static files 
 app.use('/static', express.static(path.join(__dirname, 'public')))
