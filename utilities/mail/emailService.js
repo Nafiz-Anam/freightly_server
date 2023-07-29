@@ -14,7 +14,7 @@ const sentInvoice = async (req, res) => {
     let orderItems = await helpers.get_data_list("*", "order_items", {
         order_id: order_id,
     });
-    // console.log("orderItems =>", orderItems);
+    console.log("orderItems =>", orderItems);
 
     let emailData = {
         contactDetails: {
@@ -43,6 +43,10 @@ const sentInvoice = async (req, res) => {
             delivery_contact_address: orderData[0]?.delivery_contact_address,
         },
         invoice_details: [
+            {
+                description: `Transportation`,
+                price: `${orderData[0]?.transportPrice}`,
+            },
             {
                 description: `${orderData[0]?.request_assistance_title}`,
                 price: `${orderData[0]?.request_assistance_price}`,
@@ -96,6 +100,7 @@ const sentInvoice = async (req, res) => {
             });
         })
         .catch((error) => {
+            console.log(error);
             return res.status(500).json({ error });
         });
 };

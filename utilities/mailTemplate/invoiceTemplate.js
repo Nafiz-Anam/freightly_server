@@ -4,12 +4,11 @@ module.exports = function (emailData) {
     for (let val of items) {
         let temp = `<tr>
                       <td>${val.description}</td>
-                      <td class="right-center">1</td>
                       <td class="right-align">€${val.price}</td>
                     </tr>`;
         item_table += temp;
     }
-    console.log(item_table);
+    // console.log(item_table);
     return `<!DOCTYPE html>
 <html>
 
@@ -238,14 +237,13 @@ module.exports = function (emailData) {
             <thead>
               <tr>
                 <th>Description</th>
-                <th class="right-center">Quantity</th>
                 <th class="right-align">Price</th>
               </tr>
             </thead>
             <tbody>
               ${item_table}
               <tr class="last-row">
-                <td class="total" colspan="2">Total:</td>
+                <td class="total">Total:</td>
                 <td class="total right-align">
                   €${emailData.total_order_price}
                 </td>

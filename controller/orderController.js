@@ -136,6 +136,7 @@ var ProductController = {
                     : "",
 
                 total_order_price: val?.total_price ? val?.total_price : 0,
+                transportPrice: val?.transportPrice ? val?.transportPrice : 0,
                 created_at: currentDateTime,
             };
 
