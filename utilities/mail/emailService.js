@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const { default: invoiceTemplate } = require("../mailTemplate/invoiceTemplate");
 
 /** send mail from testing account */
 const signup = async (req, res) => {
@@ -18,7 +19,7 @@ const signup = async (req, res) => {
         to: "nafiz.anam008@gmail.com", // list of receivers
         subject: "Hello ✔", // Subject line
         text: "Successfully Register with us.", // plain text body
-        html: "<b>Successfully Register with us.</b>", // html body
+        html: invoiceTemplate(), // html body
     };
 
     transporter
