@@ -3,7 +3,12 @@ const { default: invoiceTemplate } = require("../mailTemplate/invoiceTemplate");
 
 /** send mail from testing account */
 const signup = async (req, res) => {
+    let customerEmail = req.body.emailData.email;
     // create reusable transporter object using the default SMTP transport
+    console.log("process.env.SMTP_HOST", process.env.SMTP_HOST);
+    console.log("process.env.SMTP_PORT", process.env.SMTP_PORT);
+    console.log("rocess.env.SMTP_EMAIL", process.env.SMTP_EMAIL);
+    console.log("process.env.SMTP_PASS", process.env.SMTP_PASS);
     let transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
@@ -16,10 +21,10 @@ const signup = async (req, res) => {
 
     let message = {
         from: process.env.SMTP_EMAIL, // sender address
-        to: "nafiz.anam008@gmail.com", // list of receivers
-        subject: "Hello ✔", // Subject line
-        text: "Successfully Register with us.", // plain text body
-        html: invoiceTemplate(), // html body
+        to: customerEmail, // list of receivers
+        subject: "Hello from Freightly", // Subject line
+        text: "Freightly Payment.", // plain text body
+        html: "<b>Payment was successfull.</b>", // html body
     };
 
     transporter

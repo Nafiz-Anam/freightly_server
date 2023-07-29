@@ -1,23 +1,23 @@
 {
     "development": {
-        "username": "u575513417_q_cash",
-        "password": "Nafiz@1122",
-        "database": "u575513417_q_cash",
-        "host": "srv909.hstgr.io",
-        "table_prefix": "qc_"
+        "username": "u907455202_freightly_app",
+        "password": "Freightly@Nafiz@159",
+        "database": "u907455202_freightly_app",
+        "host": "srv977.hstgr.io",
+        "table_prefix": "fr_"
     },
     "test": {
-        "username": "u575513417_q_cash",
-        "password": "Nafiz@1122",
-        "database": "u575513417_q_cash",
-        "host": "srv909.hstgr.io",
-        "table_prefix": "qc_"
+        "username": "u907455202_freightly_app",
+        "password": "Freightly@Nafiz@159",
+        "database": "u907455202_freightly_app",
+        "host": "srv977.hstgr.io",
+        "table_prefix": "fr_"
     },
     "production": {
-        "username": "u575513417_q_cash",
-        "password": "Nafiz@1122",
-        "database": "u575513417_q_cash",
-        "host": "srv909.hstgr.io",
-        "table_prefix": "qc_"
+        "username": "u907455202_freightly_app",
+        "password": "Freightly@Nafiz@159",
+        "database": "u907455202_freightly_app",
+        "host": "srv977.hstgr.io",
+        "table_prefix": "fr_"
     }
 }
