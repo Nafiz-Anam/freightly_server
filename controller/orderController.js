@@ -139,11 +139,11 @@ var ProductController = {
                 created_at: currentDateTime,
             };
 
-            console.log("orderData", orderData);
+            // console.log("orderData", orderData);
 
             await OrderModel.add(orderData)
                 .then(async (result) => {
-                    console.log(result);
+                    // console.log(result);
                     for (
                         let i = 0;
                         i < itemData.length && i < itemImages.length;
@@ -164,6 +164,7 @@ var ProductController = {
                     res.status(200).json({
                         status: true,
                         message: "Order placed successfully!",
+                        order_id: result.insertId,
                     });
                 })
                 .catch((error) => {

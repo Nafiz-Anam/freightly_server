@@ -1,4 +1,15 @@
-module.exports = function () {
+module.exports = function (emailData) {
+    let items = emailData?.invoice_details;
+    let item_table = "";
+    for (let val of items) {
+        let temp = `<tr>
+                      <td>${val.description}</td>
+                      <td class="right-center">1</td>
+                      <td class="right-align">€${val.price}</td>
+                    </tr>`;
+        item_table += temp;
+    }
+    console.log(item_table);
     return `<!DOCTYPE html>
 <html>
 
@@ -201,24 +212,24 @@ module.exports = function () {
           <tr>
             <td class="div-c">
               <h2>Contact Details</h2>
-              <p>nafiz anam</p>
-              <p>nafiz@gmail.com</p>
-              <p>018596548555</p>
-              <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
+              <p>${emailData.contactDetails.customerName}</p>
+              <p>${emailData.contactDetails.customer_email}</p>
+              <p>${emailData.contactDetails.customer_phone}</p>
+              <p>${emailData.contactDetails.customer_address}</p>
             </td>
             <td class="div-p">
               <h2>Pickup Details</h2>
-              <p>nafiz anam</p>
-              <p>nafiz@gmail.com</p>
-              <p>018596548555</p>
-              <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
+              <p>${emailData.pickupContact.pickup_contact_name}</p>
+              <p>${emailData.pickupContact.pickup_contact_email}</p>
+              <p>${emailData.pickupContact.pickup_contact_phone}</p>
+              <p>${emailData.pickupContact.pickup_contact_address}</p>
             </td>
             <td class="div-d">
               <h2>Delivery Details</h2>
-              <p>nafiz anam</p>
-              <p>nafiz@gmail.com</p>
-              <p>018596548555</p>
-              <p>address sdgdg fsdfd fdfsdf asde fdhdf uturut</p>
+              <p>${emailData.deliveryContact.delivery_contact_name}</p>
+              <p>${emailData.deliveryContact.delivery_contact_email}</p>
+              <p>${emailData.deliveryContact.delivery_contact_phone}</p>
+              <p>${emailData.deliveryContact.delivery_contact_address}</p>
             </td>
           </tr>
         </table>
@@ -232,25 +243,11 @@ module.exports = function () {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>John Doe</td>
-                <td class="right-center">30</td>
-                <td class="right-align">€30.00</td>
-              </tr>
-              <tr>
-                <td>Jane Smith</td>
-                <td class="right-center">25</td>
-                <td class="right-align">€25.26</td>
-              </tr>
-              <tr>
-                <td>Michael Johnson</td>
-                <td class="right-center">40</td>
-                <td class="right-align">€56.20</td>
-              </tr>
+              ${item_table}
               <tr class="last-row">
                 <td class="total" colspan="2">Total:</td>
                 <td class="total right-align">
-                  €1120.56
+                  €${emailData.total_order_price}
                 </td>
               </tr>
             </tbody>
