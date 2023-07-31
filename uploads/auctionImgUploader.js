@@ -24,6 +24,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const auctionImgUploader = (req, res, next) => {
+    if (
+        !req.body.storage ||
+        !req.body.storage.auction_details ||
+        !req.body.storage.auction_details.image
+    ) {
+        // If the image is not available, simply skip the image uploading logic
+        return next();
+    }
+
     const selectedItem = req.body.storage.auction_details.image;
 
     if (!selectedItem || typeof selectedItem !== "string") {
