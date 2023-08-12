@@ -14,6 +14,7 @@ var ProductController = {
         let itemData = req.body.storage.selected_items;
         let itemImages = req.imageFileNames;
         console.log("Image filenames:", req.imageFileNames);
+        console.log("req.auctionImage:", req.auctionImage);
         try {
             let orderData = {
                 fromAddress: val?.fromAddress ? val?.fromAddress : "",
@@ -24,47 +25,56 @@ var ProductController = {
                     ? val?.starting_point.title
                     : "",
 
+                auction_name: val?.auction_details?.auction_name
+                    ? val?.auction_details?.auction_name
+                    : "",
+                auction_image: val?.auction_details?.image
+                    ? static_url + "auction/" + req.auctionImage
+                    : "",
+
                 pickup_date: val?.pickup_date?.date
                     ? val?.pickup_date?.date
                     : "",
                 pickup_day: val?.pickup_date?.day ? val?.pickup_date?.day : "",
                 pickup_date_price: val?.pickup_date?.cost
-                    ? parseFloat((val?.pickup_date?.cost).slice(1))
+                    ? parseFloat((val?.pickup_date?.cost).replace("€", ""))
                     : 0,
 
                 pickup_time: val?.pickup_time?.time
                     ? val?.pickup_time?.time
                     : "",
                 pickup_time_price: val?.pickup_time?.cost
-                    ? parseFloat((val?.pickup_time?.cost).slice(1))
+                    ? parseFloat((val?.pickup_time?.cost).replace("€", ""))
                     : 0,
 
                 pickup_floor_title: val?.pickup_floor?.title
                     ? val?.pickup_floor?.title
                     : "",
                 pickup_floor_price: val?.pickup_floor?.cost
-                    ? parseFloat((val?.pickup_floor?.cost).slice(1))
+                    ? parseFloat((val?.pickup_floor?.cost).replace("€", ""))
                     : 0,
 
                 request_assistance_title: val?.request_assistance?.title
                     ? val?.request_assistance?.title
                     : "",
                 request_assistance_price: val?.request_assistance?.cost
-                    ? parseFloat((val?.request_assistance?.cost).slice(1))
+                    ? parseFloat(
+                          (val?.request_assistance?.cost).replace("€", "")
+                      )
                     : 0,
 
                 delivery_time: val?.delivery_time?.time
                     ? val?.delivery_time?.time
                     : "",
                 delivery_time_price: val?.delivery_time?.cost
-                    ? parseFloat((val?.delivery_time?.cost).slice(1))
+                    ? parseFloat((val?.delivery_time?.cost).replace("€", ""))
                     : 0,
 
                 delivery_floor_title: val?.delivery_floor?.title
                     ? val?.delivery_floor?.title
                     : "",
                 delivery_floor_price: val?.delivery_floor?.cost
-                    ? parseFloat((val?.delivery_floor?.cost).slice(1))
+                    ? parseFloat((val?.delivery_floor?.cost).replace("€", ""))
                     : 0,
 
                 pickup_contact_name: val?.pickup_contact?.name
@@ -136,14 +146,15 @@ var ProductController = {
                     : "",
 
                 total_order_price: val?.total_price ? val?.total_price : 0,
+                transportPrice: val?.transportPrice ? val?.transportPrice : 0,
                 created_at: currentDateTime,
             };
 
-            console.log("orderData", orderData);
+            // console.log("orderData", orderData);
 
             await OrderModel.add(orderData)
                 .then(async (result) => {
-                    console.log(result);
+                    // console.log(result);
                     for (
                         let i = 0;
                         i < itemData.length && i < itemImages.length;
@@ -164,6 +175,7 @@ var ProductController = {
                     res.status(200).json({
                         status: true,
                         message: "Order placed successfully!",
+                        order_id: result.insertId,
                     });
                 })
                 .catch((error) => {
@@ -340,6 +352,7 @@ var ProductController = {
                     res.status(200).json({
                         status: true,
                         message: "Order requested successfully!",
+                        order_id: result.insertId,
                     });
                 })
                 .catch((error) => {

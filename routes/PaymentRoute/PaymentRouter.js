@@ -6,11 +6,11 @@ const applyUploader = require("../../uploads/applyUploder");
 const UserController = require("../../controller/userController");
 const checkAdminToken = require("../../utilities/tokenmanager/checkAdminToken");
 const PaymentController = require("../../controller/paymentController");
-const signup = require("../../utilities/mail/emailService");
+const sentInvoice = require("../../utilities/mail/emailService");
 
 router.post("/create", PaymentController.createPayment);
 router.post("/webhook", PaymentController.webhook);
-router.post("/mail", signup);
+router.post("/mail", sentInvoice);
 
 
 module.exports = router;

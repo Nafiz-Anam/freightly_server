@@ -1,13 +1,79 @@
 const nodemailer = require("nodemailer");
+const invoiceTemplate = require("../mailTemplate/invoiceTemplate");
+const helpers = require("../helper/general_helper");
 
 /** send mail from testing account */
-const signup = async (req, res) => {
-    let customerEmail = req.body.emailData.email;
-    // create reusable transporter object using the default SMTP transport
-    console.log("process.env.SMTP_HOST", process.env.SMTP_HOST);
-    console.log("process.env.SMTP_PORT", process.env.SMTP_PORT);
-    console.log("rocess.env.SMTP_EMAIL", process.env.SMTP_EMAIL);
-    console.log("process.env.SMTP_PASS", process.env.SMTP_PASS);
+const sentInvoice = async (req, res) => {
+    let order_id = req.body.order_id;
+
+    let orderData = await helpers.get_data_list("*", "orders", {
+        id: order_id,
+    });
+    console.log("orderData =>", orderData);
+
+    let orderItems = await helpers.get_data_list("*", "order_items", {
+        order_id: order_id,
+    });
+    console.log("orderItems =>", orderItems);
+
+    let emailData = {
+        contactDetails: {
+            customerName: `${orderData[0]?.customer_firstName} ${orderData[0]?.customer_lastName}`,
+            customer_email: orderData[0]?.customer_email,
+            customer_phone: orderData[0]?.customer_phone,
+            customer_address: orderData[0]?.customer_address,
+
+            customer_companyName: orderData[0]?.customer_companyName,
+            customer_chamberOfCommerce:
+                orderData[0]?.customer_chamberOfCommerce,
+            customer_vatNumber: orderData[0]?.customer_vatNumber,
+            customer_postalCode: orderData[0]?.customer_postalCode,
+            customer_areaCode: orderData[0]?.customer_areaCode,
+        },
+        pickupContact: {
+            pickup_contact_name: orderData[0]?.pickup_contact_name,
+            pickup_contact_email: orderData[0]?.pickup_contact_email,
+            pickup_contact_phone: orderData[0]?.pickup_contact_phone,
+            pickup_contact_address: orderData[0]?.pickup_contact_address,
+        },
+        deliveryContact: {
+            delivery_contact_name: orderData[0]?.delivery_contact_name,
+            delivery_contact_email: orderData[0]?.delivery_contact_email,
+            delivery_contact_phone: orderData[0]?.delivery_contact_phone,
+            delivery_contact_address: orderData[0]?.delivery_contact_address,
+        },
+        invoice_details: [
+            {
+                description: `Transportation`,
+                price: `${orderData[0]?.transportPrice}`,
+            },
+            {
+                description: `${orderData[0]?.request_assistance_title}`,
+                price: `${orderData[0]?.request_assistance_price}`,
+            },
+            {
+                description: `${orderData[0]?.pickup_floor_title}`,
+                price: `${orderData[0]?.pickup_floor_price}`,
+            },
+            {
+                description: `${orderData[0]?.pickup_date}, ${orderData[0]?.pickup_day}, ${orderData[0]?.pickup_time}`,
+                price: `${
+                    orderData[0]?.pickup_date_price +
+                    orderData[0]?.pickup_time_price
+                }`,
+            },
+            {
+                description: `${orderData[0]?.delivery_floor_title}`,
+                price: `${orderData[0]?.delivery_floor_price}`,
+            },
+            {
+                description: `${orderData[0]?.pickup_date}, ${orderData[0]?.pickup_day}, ${orderData[0]?.delivery_time}`,
+                price: `${orderData[0]?.delivery_time_price}`,
+            },
+        ],
+        total_order_price: orderData[0]?.total_order_price,
+    };
+
     let transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
@@ -20,22 +86,23 @@ const signup = async (req, res) => {
 
     let message = {
         from: process.env.SMTP_EMAIL, // sender address
-        to: customerEmail, // list of receivers
-        subject: "Hello from Freightly", // Subject line
-        text: "Freightly Payment.", // plain text body
-        html: "<b>Payment was successfull.</b>", // html body
+        to: orderData[0]?.customer_email, // list of receivers
+        subject: "Freightly Invoice", // Subject line
+        // text: "Freightly Payment.", // plain text body
+        html: invoiceTemplate(emailData), // html body
     };
 
     transporter
         .sendMail(message)
         .then((info) => {
             return res.status(201).json({
-                msg: "you should receive an email",
+                msg: "Invoice sent successfully.",
             });
         })
         .catch((error) => {
+            console.log(error);
             return res.status(500).json({ error });
         });
 };
 
-module.exports = signup;
+module.exports = sentInvoice;
