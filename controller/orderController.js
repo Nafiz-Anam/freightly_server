@@ -13,8 +13,8 @@ var ProductController = {
         let val = req.body.storage;
         let itemData = req.body.storage.selected_items;
         let itemImages = req.imageFileNames;
-        console.log("Image filenames:", req.imageFileNames);
-        console.log("req.auctionImage:", req.auctionImage);
+        // console.log("Image filenames:", req.imageFileNames);
+        // console.log("req.auctionImage:", req.auctionImage);
         try {
             let orderData = {
                 fromAddress: val?.fromAddress ? val?.fromAddress : "",
@@ -149,7 +149,6 @@ var ProductController = {
                 transportPrice: val?.transportPrice ? val?.transportPrice : 0,
                 created_at: currentDateTime,
             };
-
             // console.log("orderData", orderData);
 
             await OrderModel.add(orderData)
@@ -331,7 +330,7 @@ var ProductController = {
 
             await OrderModel.add(orderData)
                 .then(async (result) => {
-                    console.log(result);
+                    // console.log(result);
                     for (
                         let i = 0;
                         i < itemData.length && i < itemImages.length;

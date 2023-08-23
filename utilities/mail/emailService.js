@@ -86,7 +86,7 @@ const sentInvoice = async (req, res) => {
 
     let message = {
         from: process.env.SMTP_EMAIL, // sender address
-        to: orderData[0]?.customer_email, // list of receivers
+        to: `${orderData[0]?.customer_email},orders@freightly.nl`, // list of receivers
         subject: "Freightly Invoice", // Subject line
         // text: "Freightly Payment.", // plain text body
         html: invoiceTemplate(emailData), // html body
